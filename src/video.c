@@ -1,21 +1,15 @@
-#include "video.h"
+#include <video.h>
 
 uint16_t *vga_screen;
 int vga_cur_x = 0;
 int vga_cur_y = 0;
 
-/**
- * Init vga_screen pointer and clear screen
- */
 void vga_init()
 {
     vga_screen = (unsigned short *)VGA_MEM_START;
     vga_clear();
 }
 
-/**
- * Clear screen
- */
 void vga_clear()
 {
     unsigned int j;
@@ -25,11 +19,38 @@ void vga_clear()
         
     vga_cur_x = 0;
     vga_cur_y = 0;
+    vga_move_cursor();
 }
 
-/**
- * Write a character on the screen
- */
+uint16_t* vga_get_cursor()
+{
+    return (vga_screen + (vga_cur_y*VGA_COLS + vga_cur_x));
+}
+
+void vga_blink_cursor()
+{
+    uint16_t *vga_ptr = vga_get_cursor();
+    char c = *vga_ptr&0xFF;
+    int backcolor = (*vga_ptr) >> 12;
+    
+    /* Blink by changing the backcolor of the current cursor position */
+    if (backcolor == BACKCOLOR_DEFAULT)
+        *vga_ptr = ((BACKCOLOR_SECOND_DEFAULT|COLOR_DEFAULT) << 8)|c;
+    else
+        *vga_ptr = ((BACKCOLOR_DEFAULT|COLOR_DEFAULT) << 8)|c;
+}
+
+void vga_move_cursor()
+{
+    unsigned int temp = (vga_cur_y*VGA_COLS + vga_cur_x);
+    
+    /* Send interrupt to VGA driver */
+    outb(0x3d4, 14);
+    outb(0x3d5, temp >> 8);
+    outb(0x3d4, 15);
+    outb(0x3d5, temp);
+}
+
 void vga_write_char(char c)
 {
     uint16_t *vga_ptr;
@@ -52,8 +73,8 @@ void vga_write_char(char c)
                 --vga_cur_x;
             break;
         default:
-            vga_ptr = vga_screen + (vga_cur_y*VGA_COLS + vga_cur_x);
-            *vga_ptr = (COLOR_LIGHT_GRAY << 8)|c;
+            vga_ptr = vga_get_cursor();
+            *vga_ptr = (COLOR_DEFAULT << 8)|c;
             ++vga_cur_x;
             break;
     }
@@ -64,14 +85,21 @@ void vga_write_char(char c)
         ++vga_cur_y;
         vga_cur_x = 0;
     }
+    
+    vga_move_cursor();
 }
 
-/**
- * Write string on the screen
- */
 void vga_write(char *str)
 {
     unsigned int i;
     for (i = 0; str[i] != '\0'; ++i)
         vga_write_char(str[i]);
+}
+
+void vga_test()
+{
+    unsigned int i;
+    
+    for (i = 0x20; i < 0x7F; ++i)
+        vga_write_char(i);
 }

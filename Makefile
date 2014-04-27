@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -ansi -Wall -O2 -m32 -I$(INC_DIR)
+CFLAGS = -ansi -Wall -O2 -m32 -fno-builtin -fno-stack-protector -I$(INC_DIR)
 LD = ld
 LDFLAGS = -m elf_i386 -T $(LDSCRIPT)
 LDSCRIPT = link.ld
