@@ -15,14 +15,14 @@ C_SRC = $(wildcard $(C_DIR)/*.c)
 ASM_SRC = $(wildcard $(ASM_DIR)/*.asm)
 C_OBJ = $(C_SRC:$(C_DIR)/%.c=$(OBJ_DIR)/%.o)
 ASM_OBJ = $(ASM_SRC:$(ASM_DIR)/%.asm=$(OBJ_DIR)/%.o)
-OBJ = $(C_OBJ) $(ASM_OBJ)
+OBJ = $(ASM_OBJ) $(C_OBJ)
 EXEC = kernel
 
 .PHONY: all
 all: $(EXEC)
 
 $(EXEC): $(OBJ)
-	$(LD) $(OBJ) $(LIBS) $(LDFLAGS) -o $@
+	$(LD) $(LDFLAGS) -o $@ $(OBJ)
 	
 $(OBJ_DIR)/%.o: $(C_DIR)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
