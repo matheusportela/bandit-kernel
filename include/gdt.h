@@ -22,7 +22,7 @@ typedef struct gdt_ptr_t gdt_ptr_t;
 gdt_entry_t gdt[3];
 gdt_ptr_t gp;
 
-extern void gdt_flush(); /* declared at gdt.asm */
+extern void gdt_flush(); /* declared at gdt_flush.asm */
 void gdt_set_gate(int num, unsigned long base, unsigned long limit,
                   unsigned char access, unsigned char granularity);
 void gdt_install();

@@ -1,8 +1,8 @@
-global _gdt_flush
-extern _gp
+global gdt_flush
+extern gp
 
-_gdt_flush:
-    lgdt [_gp]
+gdt_flush:
+    lgdt [gp]
     mov ax, 0x10
     mov ds, ax
     mov es, ax
