@@ -1,12 +1,12 @@
 #include <video.h>
 
-uint16_t *vga_screen;
+uint16_t *vga_screen_ptr;
 int vga_cur_x = 0;
 int vga_cur_y = 0;
 
 void vga_init()
 {
-    vga_screen = (unsigned short *)VGA_MEM_START;
+    vga_screen_ptr = (unsigned short *)VGA_MEM_START;
     vga_clear();
 }
 
@@ -24,7 +24,7 @@ void vga_clear()
 
 uint16_t* vga_get_cursor()
 {
-    return (vga_screen + (vga_cur_y*VGA_COLS + vga_cur_x));
+    return (vga_screen_ptr + (vga_cur_y*VGA_COLS + vga_cur_x));
 }
 
 void vga_blink_cursor()
@@ -79,7 +79,7 @@ void vga_write_char(char c)
             break;
     }
     
-    /* End of the line */
+    /* End of screen */
     if (vga_cur_x >= VGA_COLS)
     {
         ++vga_cur_y;
@@ -96,9 +96,14 @@ void vga_write(char *str)
         vga_write_char(str[i]);
 }
 
+/**
+ * Put printable characters on the screen for testing purposes
+ */
 void vga_test()
 {
     unsigned int i;
+
+    vga_write("VGA Test\n");
     
     for (i = 0x20; i < 0x7F; ++i)
         vga_write_char(i);
