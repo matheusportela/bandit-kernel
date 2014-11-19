@@ -4,12 +4,18 @@ uint16_t *vga_screen_ptr;
 int vga_cur_x = 0;
 int vga_cur_y = 0;
 
+/**
+ * Initialize VGA cursors and screen.
+ */
 void vga_init()
 {
     vga_screen_ptr = (unsigned short *)VGA_MEM_START;
     vga_clear();
 }
 
+/**
+ * Completely clear the screen with spaces.
+ */
 void vga_clear()
 {
     unsigned int j;
@@ -22,11 +28,18 @@ void vga_clear()
     vga_move_cursor();
 }
 
+/**
+ * Calculate current VGA memory address being pointer by the cursor.
+ * @return 16-bit memory address.
+ */
 uint16_t* vga_get_cursor()
 {
     return (vga_screen_ptr + (vga_cur_y*VGA_COLS + vga_cur_x));
 }
 
+/**
+ * Toggle cursor color for blinking effect.
+ */
 void vga_blink_cursor()
 {
     uint16_t *vga_ptr = vga_get_cursor();
@@ -40,6 +53,9 @@ void vga_blink_cursor()
         *vga_ptr = ((BACKCOLOR_DEFAULT|COLOR_DEFAULT) << 8)|c;
 }
 
+/**
+ * Send new position for VGA cursor via driver interruption.
+ */
 void vga_move_cursor()
 {
     unsigned int temp = (vga_cur_y*VGA_COLS + vga_cur_x);
@@ -51,6 +67,10 @@ void vga_move_cursor()
     outb(0x3d5, temp);
 }
 
+/**
+ * Write a single char on the current VGA cursor position.
+ * @param c Character to be displayed.
+ */
 void vga_write_char(char c)
 {
     uint16_t *vga_ptr;
@@ -89,6 +109,10 @@ void vga_write_char(char c)
     vga_move_cursor();
 }
 
+/**
+ * Write a string to the current VGA cursor position.
+ * @param str String pointer.
+ */
 void vga_write(char *str)
 {
     unsigned int i;
@@ -97,7 +121,7 @@ void vga_write(char *str)
 }
 
 /**
- * Put printable characters on the screen for testing purposes
+ * Write printable characters on the screen for testing purposes.
  */
 void vga_test()
 {

@@ -1,4 +1,0 @@
-1. Create "obj" dir
-    $ mkdir obj
-2. Install libc6-dev-i386
-    $ sudo apt-get install libc6-dev-i386

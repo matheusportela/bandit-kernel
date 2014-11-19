@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include <io.h>
 
+/* VGA settings */
 #define VGA_MEM_START 0xb8000
 #define VGA_COLS 80
 #define VGA_ROWS 25
@@ -11,6 +12,7 @@
 #define VGA_SIZE (VGA_COLS*VGA_ROWS)
 #define VGA_MEM_SIZE (VGA_COLS*VGA_ROWS*VGA_FIELDS)
 
+/* VGA colors */
 #define COLOR_BLACK 0X00
 #define COLOR_BLUE 0X01
 #define COLOR_GREEN 0X02
@@ -29,6 +31,7 @@
 #define COLOR_WHITE 0x0f
 #define COLOR_DEFAULT COLOR_LIGHT_GRAY
 
+/* VGA background color */
 #define BACKCOLOR_BLACK 0X00
 #define BACKCOLOR_BLUE 0X10
 #define BACKCOLOR_GREEN 0X20
@@ -48,6 +51,7 @@
 #define BACKCOLOR_DEFAULT BACKCOLOR_BLACK
 #define BACKCOLOR_SECOND_DEFAULT (COLOR_DEFAULT << 4)
 
+/* Misc */
 #define TAB_SPACING 4
 
 void vga_init();

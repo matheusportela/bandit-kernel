@@ -2,25 +2,19 @@
  * kernel.c
  */
 
-#include <memory.h>
 #include <video.h>
-#include <limits.h>
 
-void busy_wait();
-
+/**
+ * Run kernel.
+ */
 void kmain()
 {
     vga_init();
+    vga_write("Bandit Kernel v0.0.1\n");
+    vga_write("Developer: Matheus Vieira Portela\n");
+    vga_write("Contact: matheusvportela at gmail dot com\n\n");
     vga_test();
     
     /* Kernel infinite loop */
-    for(;;)
-    {
-        busy_wait();
-    }
-}
-
-void busy_wait()
-{
-    __asm__ __volatile__("rep; nop" : : : "memory");
+    while(1) {}
 }
