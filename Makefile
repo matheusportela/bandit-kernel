@@ -26,7 +26,7 @@ C_OBJ = $(C_SRC:$(C_DIR)/%.c=$(OBJ_DIR)/%.o)
 # Assembly source and object files
 ASM_DIR = asm
 ASM_SRC = $(wildcard $(ASM_DIR)/*.asm)
-ASM_OBJ = $(ASM_SRC:$(ASM_DIR)/%.asm=$(OBJ_DIR)/%.o)
+ASM_OBJ = $(ASM_SRC:$(ASM_DIR)/%.asm=$(OBJ_DIR)/%-asm.o)
 
 # Object files directory
 OBJ_DIR = obj
@@ -50,7 +50,7 @@ $(EXEC): $(OBJ)
 $(OBJ_DIR)/%.o: $(C_DIR)/%.c ${HEADERS_SRC}
 	$(CC) $(CFLAGS) -c $< -o $@
 	
-$(OBJ_DIR)/%.o: $(ASM_DIR)/%.asm
+$(OBJ_DIR)/%-asm.o: $(ASM_DIR)/%.asm
 	$(AS) $(ASFLAGS) $< -o $@
 	
 .PHONY: clean

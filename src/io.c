@@ -1,4 +1,4 @@
-#include "io.h"
+#include <io.h>
 
 /**
  * Write a byte to an output port.
@@ -21,4 +21,3 @@ uint8_t inb(uint16_t port)
     __asm__ __volatile__("inb %1, %0" : "=a" (ret) : "d" (port));
     return ret;
 }
-

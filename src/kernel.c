@@ -1,7 +1,3 @@
-/**
- * kernel.c
- */
-
 #include <video.h>
 
 /**
