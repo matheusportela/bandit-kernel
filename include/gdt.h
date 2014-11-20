@@ -1,5 +1,15 @@
+/**
+ * Functions and structures to manage the Global Descriptor Table.
+ * 
+ * References:
+ * http://wiki.osdev.org/Global_Descriptor_Table
+ * http://x86.renejeschke.de/html/file_module_x86_id_156.html
+ */
+
 #ifndef _GDT_H_
 #define _GDT_H_
+
+#include <stdint.h>
 
 #define GDT_NUM_ENTRIES 3
 
@@ -13,8 +23,8 @@
  */
 struct gdt
 {
-    unsigned short size;
-    unsigned int offset;
+    uint16_t size;
+    uint32_t offset;
 } __attribute__((packed));
 
 /**
@@ -54,13 +64,13 @@ struct gdt
  */
 struct gdt_entry
 {
-    unsigned short limit_low;
-    unsigned short base_low;
-    unsigned char base_middle;
-    unsigned char access;
-    unsigned char limit_high;
-    unsigned char flags;
-    unsigned char base_high;
+    uint16_t limit_low;
+    uint16_t base_low;
+    uint8_t base_middle;
+    uint8_t access;
+    uint8_t limit_high;
+    uint8_t flags;
+    uint8_t base_high;
 };
 
 /**
@@ -68,8 +78,8 @@ struct gdt_entry
  */
 extern void gdt_flush();
 
-void gdt_set_entry(int num, unsigned long base, unsigned long limit,
-    unsigned char access, unsigned char flags);
+void gdt_set_entry(int index, uint32_t base, uint32_t limit, uint8_t access,
+    uint8_t flags);
 void gdt_install();
 
 #endif /* _GDT_H_ */

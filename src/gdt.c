@@ -3,8 +3,8 @@
 struct gdt gp;
 struct gdt_entry gdt[GDT_NUM_ENTRIES];
 
-void gdt_set_entry(int index, unsigned long base, unsigned long limit,
-    unsigned char access, unsigned char flags)
+void gdt_set_entry(int index, uint32_t base, uint32_t limit, uint8_t access,
+    uint8_t flags)
 {
     gdt[index].base_low = base & 0xFFFF;
     gdt[index].base_middle = (base >> 16) & 0xFF;
@@ -22,7 +22,7 @@ void gdt_install()
 {
     /* Configure GDT pointer */
     gp.size = (sizeof(struct gdt_entry) * GDT_NUM_ENTRIES) - 1;
-    gp.offset = (unsigned int)&gdt;
+    gp.offset = (uint32_t)&gdt;
 
     /* NULL descriptor */
     gdt_set_entry(0, 0, 0, 0, 0);
@@ -41,7 +41,7 @@ void gdt_install()
      * 
      * flag: 0xCF - 11001111
      * Gr: 1 - 4 KiB blocks (page granularity)
-     * Sz: 1 - 32-bit protected mdoe
+     * Sz: 1 - 32-bit protected mode
      */
     gdt_set_entry(1, 0, 0xFFFFFFFF, 0x9A, 0xCF);
 
@@ -59,7 +59,7 @@ void gdt_install()
      * 
      * flag: 0xCF - 11001111
      * Gr: 1 - 4 KiB blocks (page granularity)
-     * Sz: 1 - 32-bit protected mdoe
+     * Sz: 1 - 32-bit protected mode
      */
     gdt_set_entry(2, 0, 0xFFFFFFFF, 0x92, 0xCF);
 
