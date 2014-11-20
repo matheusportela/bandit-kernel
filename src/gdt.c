@@ -1,6 +1,6 @@
 #include <gdt.h>
 
-struct gdt gp;
+struct gdt gdt_ptr;
 struct gdt_entry gdt[GDT_NUM_ENTRIES];
 
 void gdt_set_entry(int index, uint32_t base, uint32_t limit, uint8_t access,
@@ -21,8 +21,8 @@ void gdt_set_entry(int index, uint32_t base, uint32_t limit, uint8_t access,
 void gdt_install()
 {
     /* Configure GDT pointer */
-    gp.size = (sizeof(struct gdt_entry) * GDT_NUM_ENTRIES) - 1;
-    gp.offset = (uint32_t)&gdt;
+    gdt_ptr.size = (sizeof(struct gdt_entry)*GDT_NUM_ENTRIES) - 1;
+    gdt_ptr.offset = (uint32_t)&gdt;
 
     /* NULL descriptor */
     gdt_set_entry(0, 0, 0, 0, 0);
