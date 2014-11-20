@@ -15,16 +15,20 @@ struct gdt_entry gdt[GDT_NUM_ENTRIES];
 void gdt_set_entry(int index, uint32_t base, uint32_t limit, uint8_t access,
     uint8_t flags)
 {
+    /* Base address */
     gdt[index].base_low = base & 0xFFFF;
     gdt[index].base_middle = (base >> 16) & 0xFF;
     gdt[index].base_high = (base >> 24) & 0xFF;
 
+    /* Limit segment */
     gdt[index].limit_low = limit & 0xFFFF;
-    gdt[index].limit_high = (limit >> 16) & 0xF;
+    gdt[index].granularity = (limit >> 16) & 0xF;
 
+    /* Flags */
+    gdt[index].granularity |= flags & 0xF0;
+
+    /* Access flags */
     gdt[index].access = access;
-
-    gdt[index].flags |= flags & 0xF0;
 }
 
 /**

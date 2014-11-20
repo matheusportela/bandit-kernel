@@ -8,8 +8,7 @@
  */
 void kmain()
 {
-    /* gdt_install(); */
-    
+    gdt_install();
     idt_install();
 
     vga_init();

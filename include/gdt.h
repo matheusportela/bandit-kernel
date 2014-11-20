@@ -68,8 +68,7 @@ struct gdt_entry
     uint16_t base_low;
     uint8_t base_middle;
     uint8_t access;
-    uint8_t limit_high;
-    uint8_t flags;
+    uint8_t granularity; /* 4 bits of flags, 4 bits of limit high */
     uint8_t base_high;
 };
 
