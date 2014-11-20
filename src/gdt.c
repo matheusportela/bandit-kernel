@@ -3,6 +3,15 @@
 struct gdt gdt_ptr;
 struct gdt_entry gdt[GDT_NUM_ENTRIES];
 
+/**
+ * Set parameters for the GDT entry numbered by `index`. It does not check
+ * whether `index` is inside the valid range.
+ * @param index Number of the GDT entry.
+ * @param base Initial memory address for the segment.
+ * @param limit Maximum addressable memory for the segment.
+ * @param access Access settings, check "gdt.h".
+ * @param flags Flags, check "gdt.h" for more information.
+ */
 void gdt_set_entry(int index, uint32_t base, uint32_t limit, uint8_t access,
     uint8_t flags)
 {
@@ -18,6 +27,9 @@ void gdt_set_entry(int index, uint32_t base, uint32_t limit, uint8_t access,
     gdt[index].flags |= flags & 0xF0;
 }
 
+/**
+ * Install a configured GDT to the CPU.
+ */
 void gdt_install()
 {
     /* Configure GDT pointer */
