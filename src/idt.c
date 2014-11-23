@@ -2,6 +2,7 @@
 
 struct idt idt_ptr;
 struct idt_entry idt[IDT_NUM_ENTRIES];
+
 /**
  * Set parameters for the GDT entry numbered by `index`. It does not check
  * whether `index` is inside the valid range.

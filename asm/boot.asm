@@ -1,6 +1,6 @@
 ;; boot.asm
 
-bits 32 ; 32-bit processor mode
+bits 32 ; protected mode (32-bit processor mode)
 
 section .text
     ; GRUB multiboot spec

@@ -10,5 +10,5 @@ extern idt_ptr
 global idt_flush
 idt_flush:
     ; Install IDT in CPU
-    lgdt [idt_ptr]
+    lidt [idt_ptr]
     ret
