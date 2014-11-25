@@ -301,7 +301,7 @@ isr_common_handler:
     pop ds
     popa
 
-    ; Clean the pushed error code and ISR number from _isrX function
+    ; Clean the pushed error code and ISR number from isrX function
     add esp, 8
 
     ; Pop cs, eip, eflags, ss and esp registers

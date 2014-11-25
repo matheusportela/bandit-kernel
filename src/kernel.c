@@ -2,6 +2,7 @@
 #include <gdt.h>
 #include <idt.h>
 #include <isr.h>
+#include <irq.h>
 #include <video.h>
 #include <test.h>
 
@@ -13,6 +14,7 @@ void kmain()
     gdt_install();
     idt_install();
     isr_install();
+    irq_install();
 
     vga_init();
     vga_write("Bandit Kernel v0.0.1\n");
