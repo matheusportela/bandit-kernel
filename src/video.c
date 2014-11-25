@@ -61,10 +61,10 @@ void vga_move_cursor()
     unsigned int temp = (vga_cur_y*VGA_COLS + vga_cur_x);
     
     /* Send interrupt to VGA driver */
-    outb(0x3d4, 14);
-    outb(0x3d5, temp >> 8);
-    outb(0x3d4, 15);
-    outb(0x3d5, temp);
+    outportb(0x3d4, 14);
+    outportb(0x3d5, temp >> 8);
+    outportb(0x3d4, 15);
+    outportb(0x3d5, temp);
 }
 
 /**
