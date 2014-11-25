@@ -120,6 +120,24 @@ void vga_write(char *str)
         vga_write_char(str[i]);
 }
 
+void vga_write_int(int num)
+{
+    int i;
+    char buffer[256];
+
+    for (i = 0; i < 256; ++i)
+    {
+        buffer[i] = (char)((num % 10) + 0x30);
+        num /= 10;
+
+        if (num == 0)
+            break;
+    }
+
+    for (; i >= 0; --i)
+        vga_write_char(buffer[i]);
+}
+
 /**
  * Write printable characters on the screen for testing purposes.
  */

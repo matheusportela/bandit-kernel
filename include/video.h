@@ -61,6 +61,7 @@ void vga_move_cursor();
 void vga_blink_cursor();
 void vga_write_char(char c);
 void vga_write(char *str);
+void vga_write_int(int num);
 void vga_test();
 
 #endif /* _VIDEO_H_ */
